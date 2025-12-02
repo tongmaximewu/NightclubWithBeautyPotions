@@ -1,0 +1,84 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb}
+\usepackage{hyperref}
+\usepackage{graphicx}
+
+% \problemname and \illustration
+\newcommand{\problemname}[1]{\section*{#1}}
+\newcommand{\illustration}[3]{%
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=#1\textwidth]{#2}
+        \caption{#3}
+    \end{figure}
+}
+
+\begin{document}
+
+\problemname{Nightclub Queue With Beauty Potions}
+
+% Illustration
+\illustration{0.4}{nightclub}{Waiting in line for the club.}
+
+A popular nightclub has a strict beauty requirement for entry. There are $n$ people waiting in a single-file queue, numbered from $0$ (front) to $n-1$ (back). The club's minimum beauty threshold is $8$.
+
+Each person $i$ has an initial beauty score, denoted as $b_i$ (ranging from $1$ to $10$), and a potion limit, $l_i$, which represents the maximum number of beauty potions they are allowed to drink.
+
+The bouncer processes the queue according to the following rules:
+
+\begin{enumerate}
+    \item The bouncer examines the person at the front of the line.
+    \item If their beauty score is $\ge 8$:
+    \begin{itemize}
+        \item The person enters the club.
+        \item This action takes time. The global time increases by $1$.
+        \item The person leaves the queue permanently.
+    \end{itemize}
+    \item If their beauty score is $< 8$:
+    \begin{itemize}
+        \item If the person has no potions remaining ($limit == 0$), the bouncer kicks them out. They leave the queue and no time is added.
+        \item Otherwise, the bouncer gives them one potion instantly. This increases their beauty by $1$ (up to a max of $10$) and decreases their limit by $1$. The bouncer then moves them to the back of the queue.
+        \item This action happens instantly, so no time is added.
+    \end{itemize}
+\end{enumerate}
+
+You are interested in a specific person originally at position $k$ ($0 \le k < n$). Your task is to determine how much time passes until person $k$ successfully enters the club. If person $k$ is kicked out or the queue ends without them entering, you must report that they never enter.
+
+\section*{Input}
+The input consists of four lines:
+\begin{itemize}
+    \item The first line contains a single integer $n$ ($1 \le n \le 100\,000$), the number of people in line.
+    \item The second line contains $n$ space-separated integers representing the initial beauty scores ($1 \le b_i \le 10$).
+    \item The third line contains $n$ space-separated integers representing the potion limits ($0 \le l_i \le 100$).
+    \item The fourth line contains a single integer $k$ ($0 \le k < n$), the index of the target person.
+\end{itemize}
+
+\section*{Output}
+
+Output a single integer: the time at which person $k$ successfully enters the club. If person $k$ never enters, output \texttt{-1}.
+
+\section*{Sample Input 1}
+\begin{verbatim}
+3 1
+7 5 8
+2 2 0
+\end{verbatim}
+
+\section*{Sample Output 1}
+\begin{verbatim}
+-1
+\end{verbatim}
+
+\section*{Sample Explanation}
+In the sample case, the queue evolves as follows:
+\begin{enumerate}
+    \item Person $0$ ($b=7, l=2$) drinks a potion, becomes ($b=8, l=1$), and moves to the back.
+    \item Person $1$ ($b=5, l=2$) drinks a potion, becomes ($b=6, l=1$), and moves to the back.
+    \item Person $2$ ($b=8, l=0$) is at the front. They enter. \textbf{Time = 1}.
+    \item Person $0$ ($b=8, l=1$) is at the front. They enter. \textbf{Time = 2}.
+    \item Person $1$ ($b=6, l=1$) drinks a potion, becomes ($b=7, l=0$), and moves to the back.
+    \item Person $1$ ($b=7, l=0$) is at the front. They have no potions left and beauty $< 8$. They are kicked out.
+\end{enumerate}
+Person $k=1$ never enters, so the output is $-1$.
+
+\end{document}

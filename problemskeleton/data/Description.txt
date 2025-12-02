@@ -1,0 +1,24 @@
+sample/1.in: K is unable to enter (Beauty < 8, insufficient potions). Returns -1.
+sample/2.in: K is already beautiful (Beauty >= 8) and enters immediately.
+sample/3.in: People queueing are not beautiful but have enough potions. Verifies queue rotation logic.
+
+secret/01.in: Normal case where K is beautiful enough to enter immediately.
+secret/02.in: Edge case: K is not beautiful and has 0 potions. Immediate kick-out.
+secret/03.in: Normal case: K needs potions and has enough. Verifies potion usage and re-queueing.
+secret/04.in: Everyone is beautiful except K. K must drink potions and rotate while others enter.
+secret/05.in: Simple case where K meets beauty standard and is let in immediately.
+secret/06.in: TLE Stress Test: Everyone starts at Beauty 1. Forces max rotations (7 loops) for O(N) verification.
+secret/07.in: Normal test case with ascending potion limits.
+secret/08.in: Uniform case: All people have identical beauty and potion limits. Verifies consistent rotation.
+secret/09.in: Failure case: No person meets standards and no one has potions. Output should be -1.
+secret/10.in: Mixed case: Queue contains a random mix of beauty standards and potion limits.
+secret/11.in: Small normal case ensuring correct potion decrement and queue order.
+secret/12.in: Complex case: K is mixed with people requiring enhancements. Checks that beautiful people entering doesn't break K's timing.
+secret/13.in: Complex case: Beautiful people enter, but K lacks requirements. Output should be -1.
+secret/14.in: Large Input: Testing stability with large N, where K fails to enter.
+secret/15.in: Alternating values to test for TLE, correct queue rotations, and condition checks.
+secret/16.in: TLE Stress Test: Large queue with maximum rotations. Tests for inefficient queue implementation.
+secret/17.in: Medium-sized input TLE test with non-beautiful people and insufficient potions.
+secret/18.in: Order Independence: Verifies that output is correct regardless of ascending/descending input values.
+secret/19.in: Normal large case: Ensures correct rotation, potion use, and entry time for K.
+secret/20.in: Final verification: Random large input validation.

@@ -1,0 +1,73 @@
+Title: Nightclub Queue With Beauty Potions
+Hei Li, Salo Lavy Perez, Tong Wu
+Topic: Queue 
+
+Slide 1: Problem Statement
+The Story: A nightclub bouncer filters a queue based on a "beauty score." Rejects get a potion (improving score) and go to the back; those with no potions get kicked out.
+Inspiration: Real-world queues combined with a "priority upgrade" mechanic (like game mechanics or theme parks).
+Difficulty: Estimated 3.0 on Kattis. It requires understanding Queue simulation but has a tricky time-limit constraint.
+
+Slide 2: Input/Output & Constraints 
+Input:
+N (People), Beauty Array, Limit Array, K (Target Person).
+Constraints: N <= 100,000. This dictates that an O(N^2) solution will fail.
+100,000 is standard for O(N) problems. 1 second time limit ensures brute force fails.
+Output: The exact time step when Person K enters, or -1 if they never do.
+
+Slide 3: The Correct Solution
+Algorithm: Simulation using a Deque (Double Ended Queue).
+Logic:
+Pop front -> Check Beauty -> Enter (Time++) OR Drink Potion (Re-queue).
+Complexity:
+Time: O(N). Since max beauty increase is limited (max 8 steps per person), total operations are linear.
+Space: O(N) to store the queue.
+Language Comparison:
+C++: Fastest execution.
+Python: Easiest to implement but needed collections.deque to pass time limits.
+
+Slide 4: The Incorrect Solutions
+Solution A: "Wrong Answer" (Logic Error)
+Error: Incremented "Time" every time someone reached the front of the line, rather than only when someone entered.
+Result: Fails almost all test cases except trivial ones.
+Solution B: "TLE"
+Error: Used a standard Python list with pop(0).
+Why it fails: pop(0) is O(N). Total complexity becomes O(N^2).
+Performance: Passes small cases (N=100), times out on large cases (N=100,000).
+Solution C: "RTE"
+Error: ZeroDivisionError.
+Why it fails: Attempts to calculate a heuristic (threshold - beauty) / limit without checking if limit is 0.
+Performance: Works on sample where the only person with limit 0 enters immediately, but crashes on cases where people are kicked out.
+
+Slide 5: Test Case Generator
+Key Generator Modes:
+random: Standard distribution.
+stress: All beauty=1, Max limits. Forces maximum queue rotations (worst-case performance).
+edge_kicked: All limits=0. Everyone gets kicked out immediately.
+mixed_chaos: High variance to test logic stability.
+
+Slide 6: Input & Output Data
+3 Sample cases
+20 Secret cases
+Edge Cases Covered:
+N=1 (Minimum input).
+N=100,000 (Maximum input).
+Target K is the very last person.
+Nobody enters (Result -1).
+Distribution: Balanced mix of "Easy" (enters instantly), "Medium" (cycles a few times), and "Hard" (TLE bait).
+
+Slide 7: Input Validator
+Strict Rules:
+Ensures no leading zeros.
+Checks exact range: 1 <= beauty <= 10 and 0 <= limit <= 100.
+Validates format matches the 4-line structure exactly.
+Mechanism: Returns Exit Code 42 on success, 43 on failure.
+Challenge: Ensuring consistency between the Generator output and Validator expectations (solved by standardizing to 4 lines).
+
+Slide 8: Conclusion & Learnings
+What we learned (so far):
+The importance of synchronizing Code, Docs, and Data. A mismatch in input format (3 lines vs 4 lines) caused issues we had to debug.
+LLM Usage:
+Used for generating boilerplate code (LaTeX skeleton, Validator regex).
+Finding edge cases we had not thought about such as the complicated random test in the test generator.
+Used for debugging file format mismatches.
+Team Work: Divided into Problem Statement + Solutions, Data, and Generation + Documentation.
